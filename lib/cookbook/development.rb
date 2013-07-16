@@ -1,4 +1,4 @@
-require "cookbook/development/version"
+require 'cookbook/development/version'
 
 module Cookbook
   module Development
