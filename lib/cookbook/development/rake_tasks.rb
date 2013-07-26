@@ -4,7 +4,7 @@ require 'rspec/core/rake_task'
 require 'kitchen/rake_tasks'
 
 project_dir   = Dir.pwd
-chef_dir      = File.join(project_dir, '.chef')
+chef_dir      = File.join(project_dir, 'test', '.chef')
 knife_cfg     = File.join(chef_dir, 'knife.rb')
 vendor_dir    = File.join(project_dir, 'vendor')
 cookbooks_dir = File.join(vendor_dir, 'cookbooks')
