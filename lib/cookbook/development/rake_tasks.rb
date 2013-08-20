@@ -38,7 +38,6 @@ end
 
 desc 'Run all tests and linting'
 task :test do
-  FileUtils.rm_rf vendor_dir
   Rake::Task['knife_test'].invoke
   Rake::Task['foodcritic'].invoke
   Rake::Task['unit'].invoke
@@ -46,6 +45,7 @@ task :test do
 end
 
 task :berks_install do |task|
+  FileUtils.rm_rf vendor_dir
   Berkshelf::Berksfile.from_file(berks_file).install(:path => cookbooks_dir)
 end
 
