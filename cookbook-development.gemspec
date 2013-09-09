@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'foodcritic'
   spec.add_dependency 'berkshelf'
+  spec.add_dependency 'version'
 end
