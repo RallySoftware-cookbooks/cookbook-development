@@ -2,6 +2,7 @@ require 'foodcritic'
 require 'berkshelf'
 require 'rspec/core/rake_task'
 require 'kitchen/rake_tasks'
+require 'rake/version_task'
 
 project_dir   = Dir.pwd
 chef_dir      = File.join(project_dir, 'test', '.chef')
@@ -11,6 +12,7 @@ cookbooks_dir = File.join(vendor_dir, 'cookbooks')
 berks_file    = File.join(project_dir, 'Berksfile')
 
 Kitchen::RakeTasks.new
+Rake::VersionTask.new
 
 desc 'Runs knife cookbook test'
 task :knife_test => [knife_cfg, :berks_install] do |task|
@@ -22,7 +24,7 @@ end
 
 desc 'Runs Foodcritic linting'
 FoodCritic::Rake::LintTask.new do |task|
-  task.options = {:search_gems => true, :epic_fail => ['any'], :exclude_paths => ['vendor/cookbooks/**/*']}
+  task.options = {:search_gems => true, :fail_tags => ['any'], :exclude_paths => ['vendor/cookbooks/**/*']}
 end
 
 desc 'Runs unit tests'
@@ -48,6 +50,14 @@ task :berks_install do |task|
   FileUtils.rm_rf vendor_dir
   Berkshelf::Berksfile.from_file(berks_file).install(:path => cookbooks_dir)
 end
+
+desc 'Does a berks upload --except :test --halt-on-frozen'
+task :upload do |task|
+  Berkshelf::Berksfile.from_file(berks_file).upload(:path => cookbooks_dir, :except => :test, :halt_on_frozen => true)
+end
+
+desc 'Runs the full test suite and then does a berks upload'
+task :release => [:test, :upload]
 
 directory chef_dir
 
