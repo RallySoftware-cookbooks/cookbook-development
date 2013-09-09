@@ -4,6 +4,9 @@
 rule 'RALY001', 'Prefer single-quoted strings' do
   tags %w{style strings}
   recipe do |ast, filename|
+    
+    next if filename.end_with? '.erb'
+
     lines = File.readlines(filename)
 
     lines.collect.with_index do |line, index|
