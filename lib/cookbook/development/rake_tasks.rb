@@ -3,6 +3,8 @@ require 'berkshelf'
 require 'rspec/core/rake_task'
 require 'kitchen/rake_tasks'
 require 'rake/version_task'
+require 'chef/cookbook/metadata'
+require 'cookbook/development/rake/version_tasks'
 
 project_dir   = Dir.pwd
 chef_dir      = File.join(project_dir, 'test', '.chef')
@@ -12,7 +14,7 @@ cookbooks_dir = File.join(vendor_dir, 'cookbooks')
 berks_file    = File.join(project_dir, 'Berksfile')
 
 Kitchen::RakeTasks.new
-Rake::VersionTask.new
+CookbookDevelopment::MetadataVersionTask.new
 
 desc 'Runs knife cookbook test'
 task :knife_test => [knife_cfg, :berks_install] do |task|
