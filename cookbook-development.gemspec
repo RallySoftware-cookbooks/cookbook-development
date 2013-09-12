@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'berkshelf', '~> 2.0'
   spec.add_dependency 'bundler', '~> 1.3'
   spec.add_dependency 'chef', '~> 11.6'
-  spec.add_dependency 'chefspec', '~> 1.3'
+  spec.add_dependency 'chefspec', '~> 2.0'
   spec.add_dependency 'foodcritic', '~> 2.2'
   # Workaround for json dependency for chef and berkshelf.  Chef
   # wants <= 1.7.7 and berkshelf >= 1.5 but bundler tries to grab 1.8.0
@@ -29,7 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'json', '1.7.7'
   spec.add_dependency 'kitchen-vagrant', "~> 0.11"
   spec.add_dependency 'rake', '~> 10.0'
-  spec.add_dependency 'strainer', '~> 3.0'
   spec.add_dependency 'test-kitchen', '1.0.0.beta.3'
   spec.add_dependency 'version', '~> 1.0'
 end
