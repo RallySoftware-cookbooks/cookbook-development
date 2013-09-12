@@ -53,9 +53,9 @@ task :berks_install do |task|
   Berkshelf::Berksfile.from_file(berks_file).install(:path => cookbooks_dir)
 end
 
-desc 'Does a berks upload --except :test --halt-on-frozen'
+desc 'Does a berks upload --except :test'
 task :upload do |task|
-  Berkshelf::Berksfile.from_file(berks_file).upload(:path => cookbooks_dir, :except => :test, :halt_on_frozen => true)
+  Berkshelf::Berksfile.from_file(berks_file).upload(:path => cookbooks_dir, :except => :test)
 end
 
 desc 'Runs the full test suite and then does a berks upload'
