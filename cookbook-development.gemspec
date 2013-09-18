@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'bundler', '~> 1.3'
   spec.add_dependency 'chef', '~> 11.6'
   spec.add_dependency 'chefspec', '~> 2.0'
-  spec.add_dependency 'foodcritic', '~> 2.2'
+  spec.add_dependency 'foodcritic', '~> 3.0'
   # Workaround for json dependency for chef and berkshelf.  Chef
   # wants <= 1.7.7 and berkshelf >= 1.5 but bundler tries to grab 1.8.0
   # which violates chef's requirement.  Seems like a bundler bug.
