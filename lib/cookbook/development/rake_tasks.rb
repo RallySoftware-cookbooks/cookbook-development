@@ -14,7 +14,7 @@ cookbooks_dir = File.join(vendor_dir, 'cookbooks')
 berks_file    = File.join(project_dir, 'Berksfile')
 
 Kitchen::RakeTasks.new
-CookbookDevelopment::MetadataVersionTask.new
+CookbookDevelopment::VersionTask.new
 
 desc 'Runs knife cookbook test'
 task :knife_test => [knife_cfg, :berks_install] do |task|
