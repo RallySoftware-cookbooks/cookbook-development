@@ -35,7 +35,6 @@ module CookbookDevelopment
     def release_cookbook
       raise "Tag #{version_tag} has already been created." if already_tagged?
       raise "You have uncommitted changes." unless clean? && committed?
-      raise "You have unpushed commits." if unpushed?
 
       Rake::Task[:test].invoke
 
