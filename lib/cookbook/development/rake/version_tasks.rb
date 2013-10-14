@@ -57,7 +57,7 @@ module CookbookDevelopment
     end
   end
 
-  class VersionTask < Rake::TaskLib
+  class VersionTasks < Rake::TaskLib
     def initialize
       @version_file = VersionFile.in_dir(Dir.pwd)
       yield(self) if block_given?
