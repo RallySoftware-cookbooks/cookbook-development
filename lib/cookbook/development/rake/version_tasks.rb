@@ -4,12 +4,24 @@ require 'rake/tasklib'
 module CookbookDevelopment
 
   class VersionFile
+    VERSION_FILE = File.join(Dir.pwd, 'VERSION')
+    ALT_VERSION_FILE = File.join(Dir.pwd, 'recipes', 'VERSION')
+
     class << self
       def in_dir(dir = Dir.pwd)
-        if File.exist? File.join(Dir.pwd, 'VERSION')
-          VersionFile.new(File.join(Dir.pwd, 'VERSION'))
-        elsif File.exist? File.join(Dir.pwd, 'metadata.rb')
-          MetadataVersion.new(File.join(Dir.pwd, 'metadata.rb'))
+        metadata_file = File.join(Dir.pwd, 'metadata.rb')
+
+        if File.exist? VERSION_FILE
+          VersionFile.new(VERSION_FILE)
+        elsif File.exist? ALT_VERSION_FILE
+          # The release process relies on having a VERSION file in the root of
+          # your cookbook as well as the version attribute in metadata.rb reading
+          # from said VERSION file. Until https://github.com/opscode/test-kitchen/pull/212
+          # is resolved we need to put the cookbooks in a place that test-kitchen
+          # will copy to the VM.
+          VersionFile.new(ALT_VERSION_FILE)
+        elsif File.exist? metadata_file
+          MetadataVersion.new(metadata_file)
         else
           raise 'I could not find a VERSION file or a metadata.rb'
         end
