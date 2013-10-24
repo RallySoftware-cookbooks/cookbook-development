@@ -25,7 +25,22 @@ module CookbookDevelopment
     end
 
     def define
-      Kitchen::RakeTasks.new
+
+      kitchen_config = Kitchen::Config.new
+      kitchen_config.supervised = false
+      Kitchen.logger = Kitchen.default_file_logger
+
+      namespace "kitchen" do
+        kitchen_config.instances.each do |instance|
+          desc "Run #{instance.name} test instance"
+          task instance.name do
+            instance.test(:passing)
+          end
+        end
+
+        desc "Run all test instances"
+        task "all" => kitchen_config.instances.map { |i| i.name }
+      end
 
       desc 'Runs knife cookbook test'
       task :knife_test => [knife_cfg, :berks_install] do |task|

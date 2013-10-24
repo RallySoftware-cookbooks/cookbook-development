@@ -31,14 +31,10 @@ module CookbookDevelopment
         release_cookbook
       end
 
-      desc 'Does not run the full test suite and then does a berks upload'
-      task :notest_release do
-        release_cookbook('skip_test')
-      end
-
     end
 
     def release_cookbook(skip_test = false)
+      start_time = Time.now
       release_version = version
       release_tag = version_tag(release_version)
 
@@ -46,7 +42,7 @@ module CookbookDevelopment
       raise 'You have uncommitted changes.' unless clean? && committed?
       raise 'You have unpushed commits.' if unpushed?
 
-      Rake::Task[:test].invoke unless skip_test
+      Rake::Task[:test].invoke unless ENV['test'] == 'false'
 
       tag_version(release_version, release_tag) do
         berks_upload
@@ -54,6 +50,9 @@ module CookbookDevelopment
         git_pull
         git_push
       end
+
+      elapsed = Time.now - start_time
+      puts elapsed
     end
 
     def berks_upload
