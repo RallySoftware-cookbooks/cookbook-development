@@ -52,7 +52,7 @@ module CookbookDevelopment
 
       desc 'Runs Foodcritic linting'
       FoodCritic::Rake::LintTask.new do |task|
-        task.options = {:search_gems => true, :fail_tags => ['any'], :tags => ['~FC003'], :exclude_paths => ['vendor/cookbooks/**/*']}
+        task.options = {:search_gems => true, :fail_tags => ['any'], :tags => ['~FC003', '~FC015'], :exclude_paths => ['vendor/cookbooks/**/*']}
       end
 
       desc 'Runs unit tests'
