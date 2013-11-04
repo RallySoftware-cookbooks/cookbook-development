@@ -27,7 +27,6 @@ module CookbookDevelopment
     def define
 
       kitchen_config = Kitchen::Config.new
-      kitchen_config.supervised = false
       Kitchen.logger = Kitchen.default_file_logger
 
       namespace "kitchen" do
