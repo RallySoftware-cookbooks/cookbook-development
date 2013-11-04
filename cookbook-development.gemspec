@@ -29,6 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'json', '1.7.7'
   spec.add_dependency 'kitchen-vagrant', "~> 0.11"
   spec.add_dependency 'rake', '~> 10.0'
-  spec.add_dependency 'test-kitchen', '1.0.0.beta.3'
+  spec.add_dependency 'test-kitchen', '1.0.0.beta.4'
   spec.add_dependency 'version', '~> 1.0'
 end
