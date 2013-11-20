@@ -27,8 +27,8 @@ Gem::Specification.new do |spec|
   # wants <= 1.7.7 and berkshelf >= 1.5 but bundler tries to grab 1.8.0
   # which violates chef's requirement.  Seems like a bundler bug.
   spec.add_dependency 'json', '1.7.7'
-  spec.add_dependency 'kitchen-vagrant', "~> 0.11"
+  spec.add_dependency 'kitchen-vagrant', '~> 0.11'
   spec.add_dependency 'rake', '~> 10.0'
-  spec.add_dependency 'test-kitchen', '1.0.0.beta.3'
+  spec.add_dependency 'test-kitchen'
   spec.add_dependency 'version', '~> 1.0'
 end
