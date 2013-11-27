@@ -1,6 +1,6 @@
 module StubHelpers
 
-  def global_stubs
+  def stub_include_recipe
     # Don't worry about external cookbook dependencies
     Chef::Cookbook::Metadata.any_instance.stub(:depends)
 
