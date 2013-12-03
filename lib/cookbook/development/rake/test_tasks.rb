@@ -19,6 +19,7 @@ module CookbookDevelopment
       @vendor_dir    = File.join(project_dir, 'vendor')
       @cookbooks_dir = File.join(vendor_dir, 'cookbooks')
       @berks_file    = File.join(project_dir, 'Berksfile')
+      @metadata_file = File.join(project_dir, 'metadata.rb')
 
       yield(self) if block_given?
       define
@@ -44,6 +45,9 @@ module CookbookDevelopment
       desc 'Runs knife cookbook test'
       task :knife_test => [knife_cfg, :berks_install] do |task|
         cookbook_name = File.basename(project_dir)
+        IO.readlines(@metadata_file).each do |line|
+          cookbook_name = line.split[1] if line.split[0] == 'name'
+        end  
         Dir.chdir(File.join(project_dir, '..')) do
           sh "bundle exec knife cookbook test #{cookbook_name} --config #{knife_cfg}"
         end
