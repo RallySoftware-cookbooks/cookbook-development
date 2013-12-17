@@ -68,7 +68,7 @@ module CookbookDevelopment
     end
 
     def git_pull
-      cmd = 'git pull --rebase'
+      cmd = 'git pull --rebase origin master'
       out, code = sh_with_code(cmd)
       raise "Couldn't git pull. `#{cmd}' failed with the following output:\n\n#{out}\n" unless code == 0
     end
@@ -79,7 +79,7 @@ module CookbookDevelopment
       puts 'Pushed git commits and tags.'
     end
 
-    def perform_git_push(options = '')
+    def perform_git_push(options = 'origin master')
       cmd = "git push #{options}"
       out, code = sh_with_code(cmd)
       raise "Couldn't git push. `#{cmd}' failed with the following output:\n\n#{out}\n" unless code == 0
