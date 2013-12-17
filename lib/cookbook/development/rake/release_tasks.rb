@@ -68,7 +68,7 @@ module CookbookDevelopment
     end
 
     def git_pull
-      cmd = 'git pull --rebase origin master'
+      cmd = 'git pull -a origin master'
       out, code = sh_with_code(cmd)
       raise "Couldn't git pull. `#{cmd}' failed with the following output:\n\n#{out}\n" unless code == 0
     end
