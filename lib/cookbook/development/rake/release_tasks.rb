@@ -94,7 +94,7 @@ module CookbookDevelopment
     end
 
     def unpushed?
-      sh_with_code('git cherry')[0] != ''
+      sh_with_code('git cherry master')[0] != ''
     end
 
     def sh(cmd, &block)
