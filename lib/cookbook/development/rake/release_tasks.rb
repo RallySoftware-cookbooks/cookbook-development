@@ -28,9 +28,16 @@ module CookbookDevelopment
 
       desc 'Runs the full test suite and then does a berks upload'
       task :release do
+        puts ""
+        puts "*** This has been deprecated in favor of releasing through CI! ***"
+        puts ""
         release_cookbook
       end
 
+      desc 'Runs the full test suite and then does a berks upload from CI'
+      task :ci do
+        release_cookbook
+      end
     end
 
     def release_cookbook(skip_test = false)
