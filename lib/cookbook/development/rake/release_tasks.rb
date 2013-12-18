@@ -36,25 +36,28 @@ module CookbookDevelopment
 
       desc 'Runs the full test suite and then does a berks upload from CI'
       task :ci do
-        release_cookbook
+        release_cookbook(false, true)
       end
     end
 
-    def release_cookbook(skip_test = false)
+    def release_cookbook(skip_test = false, ci = false)
       start_time = Time.now
       release_version = version
       release_tag = version_tag(release_version)
 
       raise "Tag #{release_tag} has already been created." if already_tagged?(release_tag)
-      raise 'You have uncommitted changes.' unless clean? && committed?
-      raise 'You have unpushed commits.' if unpushed?
+
+      unless ci
+        raise 'You have uncommitted changes.' unless clean? && committed?
+        raise 'You have unpushed commits.' if unpushed?
+      end
 
       Rake::Task[:test].invoke unless ENV['test'] == 'false'
 
       tag_version(release_version, release_tag) do
         berks_upload
         Rake::Task['version:bump:patch'].invoke
-        git_pull
+        git_pull unless ci
         git_push
       end
 
@@ -94,7 +97,7 @@ module CookbookDevelopment
     end
 
     def unpushed?
-      sh_with_code('git cherry master')[0] != ''
+      sh_with_code('git cherry')[0] != ''
     end
 
     def sh(cmd, &block)
