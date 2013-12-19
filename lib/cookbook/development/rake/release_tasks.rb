@@ -8,6 +8,8 @@ module CookbookDevelopment
     attr_reader :cookbooks_dir
     attr_reader :berks_file
 
+    TROUBLESHOOTING_MSG = "Refer to <a href='https://github.com/RallySoftware-cookbooks/chef-tutorials/blob/master/troubleshooting/ci.md'>this page</a> to resolve this issue."
+
     def initialize
       @project_dir   = Dir.pwd
       @chef_dir      = File.join(project_dir, 'test', '.chef')
@@ -45,7 +47,7 @@ module CookbookDevelopment
       release_version = version
       release_tag = version_tag(release_version)
 
-      raise "Tag #{release_tag} has already been created." if already_tagged?(release_tag)
+      raise "Tag #{release_tag} has already been created.\n\nThis may be caused by a failed build. #{TROUBLESHOOTING_MSG}" if already_tagged?(release_tag)
 
       unless ci
         raise 'You have uncommitted changes.' unless clean? && committed?
@@ -56,10 +58,11 @@ module CookbookDevelopment
 
       tag_version(release_version, release_tag) do
         berks_upload
-        Rake::Task['version:bump:patch'].invoke
-        git_pull unless ci
-        git_push
       end
+
+      Rake::Task['version:bump:patch'].invoke
+      git_pull unless ci
+      git_push
 
       elapsed = Time.now - start_time
       puts elapsed
@@ -70,7 +73,7 @@ module CookbookDevelopment
       Rake::Task[:upload].invoke
     end
 
-    def git_pull
+    def git_pull(cmd = 'git pull --rebase')
       cmd = 'git pull --rebase'
       out, code = sh_with_code(cmd)
       raise "Couldn't git pull. `#{cmd}' failed with the following output:\n\n#{out}\n" unless code == 0
@@ -85,7 +88,7 @@ module CookbookDevelopment
     def perform_git_push(options = 'origin master')
       cmd = "git push #{options}"
       out, code = sh_with_code(cmd)
-      raise "Couldn't git push. `#{cmd}' failed with the following output:\n\n#{out}\n" unless code == 0
+      raise "Couldn't git push. `#{cmd}' failed with the following output:\n\n#{out}\n\nThis could be a result of unmerged commits on master. #{TROUBLESHOOTING_MSG}" unless code == 0
     end
 
     def clean?
