@@ -8,7 +8,7 @@ module CookbookDevelopment
     attr_reader :cookbooks_dir
     attr_reader :berks_file
 
-    TROUBLESHOOTING_MSG = "Refer to <a href='https://github.com/RallySoftware-cookbooks/chef-tutorials/blob/master/troubleshooting/ci.md'>this page</a> to resolve this issue."
+    TROUBLESHOOTING_MSG = "Refer to https://github.com/RallySoftware-cookbooks/chef-tutorials/blob/master/troubleshooting/ci.md to resolve this issue."
 
     def initialize
       @project_dir   = Dir.pwd
