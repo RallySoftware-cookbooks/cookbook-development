@@ -47,7 +47,7 @@ module CookbookDevelopment
       release_version = version
       release_tag = version_tag(release_version)
 
-      raise "Tag #{release_tag} has already been created.\n\nThis may be caused by a failed build. #{TROUBLESHOOTING_MSG}" if already_tagged?(release_tag)
+      raise "Tag #{release_tag} has already been created.\n\nThis may be caused by a failed build. #{TROUBLESHOOTING_MSG}\n" if already_tagged?(release_tag)
 
       unless ci
         raise 'You have uncommitted changes.' unless clean? && committed?
@@ -88,7 +88,7 @@ module CookbookDevelopment
     def perform_git_push(options = 'origin master')
       cmd = "git push #{options}"
       out, code = sh_with_code(cmd)
-      raise "Couldn't git push. `#{cmd}' failed with the following output:\n\n#{out}\n\nThis could be a result of unmerged commits on master. #{TROUBLESHOOTING_MSG}" unless code == 0
+      raise "Couldn't git push. `#{cmd}' failed with the following output:\n\n#{out}\n\nThis could be a result of unmerged commits on master. #{TROUBLESHOOTING_MSG}\n" unless code == 0
     end
 
     def clean?
