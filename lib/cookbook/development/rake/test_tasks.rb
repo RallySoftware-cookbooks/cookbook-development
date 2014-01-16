@@ -17,7 +17,7 @@ module CookbookDevelopment
       @chef_dir      = File.join(project_dir, 'test', '.chef')
       @knife_cfg     = File.join(chef_dir, 'knife.rb')
       @vendor_dir    = File.join(project_dir, 'vendor')
-      @cookbooks_dir = File.join(vendor_dir, 'cookbooks')
+      @cookbooks_dir = File.join(vendor_dir)
       @berks_file    = File.join(project_dir, 'Berksfile')
       @metadata_file = File.join(project_dir, 'metadata.rb')
 
@@ -47,7 +47,7 @@ module CookbookDevelopment
         cookbook_name = File.basename(project_dir)
         IO.readlines(@metadata_file).each do |line|
           cookbook_name = line.split[1] if line.split[0] == 'name'
-        end  
+        end
         Dir.chdir(File.join(project_dir, '..')) do
           sh "bundle exec knife cookbook test #{cookbook_name} --config #{knife_cfg}"
         end
@@ -55,7 +55,7 @@ module CookbookDevelopment
 
       desc 'Runs Foodcritic linting'
       FoodCritic::Rake::LintTask.new do |task|
-        task.options = {:search_gems => true, :fail_tags => ['any'], :tags => ['~FC003', '~FC015'], :exclude_paths => ['vendor/cookbooks/**/*']}
+        task.options = {:search_gems => true, :fail_tags => ['any'], :tags => ['~FC003', '~FC015'], :exclude_paths => ['vendor/**/*']}
       end
 
       desc 'Runs unit tests'
@@ -79,7 +79,7 @@ module CookbookDevelopment
 
       task :berks_install do |task|
         FileUtils.rm_rf vendor_dir
-        Berkshelf::Berksfile.from_file(berks_file).install(:path => cookbooks_dir)
+        Berkshelf::Berksfile.from_file(berks_file).vendor(cookbooks_dir)
       end
 
       directory chef_dir
