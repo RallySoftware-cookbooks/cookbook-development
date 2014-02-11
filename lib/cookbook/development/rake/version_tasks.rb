@@ -5,48 +5,33 @@ module CookbookDevelopment
 
   class VersionFile
     VERSION_FILE = File.join(Dir.pwd, 'VERSION')
-    ALT_VERSION_FILE = File.join(Dir.pwd, 'recipes', 'VERSION')
 
-    class << self
-      def in_dir(dir = Dir.pwd)
-        metadata_file = File.join(Dir.pwd, 'metadata.rb')
+    attr_reader :path
 
-        if File.exist? VERSION_FILE
-          VersionFile.new(VERSION_FILE)
-        elsif File.exist? ALT_VERSION_FILE
-          # The release process relies on having a VERSION file in the root of
-          # your cookbook as well as the version attribute in metadata.rb reading
-          # from said VERSION file. Until https://github.com/opscode/test-kitchen/pull/212
-          # is resolved we need to put the cookbooks in a place that test-kitchen
-          # will copy to the VM.
-          VersionFile.new(ALT_VERSION_FILE)
-        elsif File.exist? metadata_file
-          MetadataVersion.new(metadata_file)
-        else
-          raise 'I could not find a VERSION file or a metadata.rb'
-        end
-      end
+    def initialize(path = VERSION_FILE)
+      @path = Pathname.new(path)
     end
 
-    attr_reader :version
-    attr_reader :path
-    def initialize(path)
-      @path = Pathname.new(path)
-      @version = @path.read
+    def exist?
+      File.exist? @path
+    end
+
+    def version
+      @path.read if exist?
     end
 
     def bump(level)
-      @version.to_version.bump!(level).to_s
+      version.to_version.bump!(level).to_s
     end
 
     def bump!(level)
-      @version = bump(level)
+      version = bump(level)
       save
-      @version
+      version
     end
 
     def to_s
-      @version
+      version
     end
 
     def save
@@ -56,42 +41,31 @@ module CookbookDevelopment
     end
   end
 
-  class MetadataVersion < VersionFile
-    def initialize(path)
-      @path = Pathname.new(path)
-      @metadata = @path.read
-      @metadata =~ /version\s+'(\d+\.\d+\.\d+)'/
-      @version = $1
-    end
-
-    def to_s
-      @metadata.sub(/(^version\s+')(\d+\.\d+\.\d+)(')/, "\\1#{@version}\\3" )
-    end
-  end
-
   class VersionTasks < Rake::TaskLib
     def initialize
-      @version_file = VersionFile.in_dir(Dir.pwd)
+      @version_file = VersionFile.new
       yield(self) if block_given?
       define
     end
 
     def define
-      namespace :version do
-        namespace :bump do
-          desc "Bump to #{@version_file.bump(:major)}"
-          task :major do
-            bump_version!(:major)
-          end
+      if @version_file.exist?
+        namespace :version do
+          namespace :bump do
+            desc "Bump to #{@version_file.bump(:major)}"
+            task :major do
+              bump_version!(:major)
+            end
 
-          desc "Bump to #{@version_file.bump(:minor)}"
-          task :minor do
-            bump_version!(:minor)
-          end
+            desc "Bump to #{@version_file.bump(:minor)}"
+            task :minor do
+              bump_version!(:minor)
+            end
 
-          desc "Bump to #{@version_file.bump(:revision)}"
-          task :patch do
-            bump_version!(:revision)
+            desc "Bump to #{@version_file.bump(:revision)}"
+            task :patch do
+              bump_version!(:revision)
+            end
           end
         end
       end
