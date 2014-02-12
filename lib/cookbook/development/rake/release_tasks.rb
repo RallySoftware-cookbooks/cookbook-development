@@ -118,20 +118,14 @@ module CookbookDevelopment
 
     def version
       version_file = VersionFile::VERSION_FILE
-      alt_version_file = VersionFile::ALT_VERSION_FILE
 
       if File.exist?(version_file)
         Version.current(version_file)
-      elsif File.exist?(alt_version_file)
-        Version.current(alt_version_file)
       else
         raise <<-MSG
         The versioning/release process relies on having a VERSION file in the root of
         your cookbook as well as the version attribute in metadata.rb reading
-        from said VERSION file. Until https://github.com/opscode/test-kitchen/pull/212
-        is resolved we need to put the cookbooks in a place that test-kitchen
-        will copy to the VM. That place is in recipes/VERSION. Neither #{version_file}
-        nor #{alt_version_file} were found in your cookbook.
+        from said VERSION file.
         MSG
       end
     end
