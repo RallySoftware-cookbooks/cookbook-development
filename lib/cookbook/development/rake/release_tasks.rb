@@ -28,41 +28,51 @@ module CookbookDevelopment
         Berkshelf::Berksfile.from_file(berks_file).upload(:path => cookbooks_dir, :except => :test)
       end
 
-      desc 'Runs the full test suite and then does a berks upload'
-      task :release do
-        puts ""
-        puts "*** This has been deprecated in favor of releasing through CI! ***"
-        puts ""
-        release_cookbook
-      end
-
       desc 'Runs the full test suite and then does a berks upload from CI'
       task :ci do
-        release_cookbook(false, true)
+        release_cookbook
       end
     end
 
-    def release_cookbook(skip_test = false, ci = false)
-      start_time = Time.now
-      release_version = version
-      release_tag = version_tag(release_version)
+    def tag?
+      ENV['GIT_TAG'] == 'true'
+    end
 
-      raise "Tag #{release_tag} has already been created.\n\nThis may be caused by a failed build. #{TROUBLESHOOTING_MSG}\n\n" if already_tagged?(release_tag)
+    def tag_and_upload
+      if(tag?)
+        release_version = version
+        release_tag = version_tag(release_version)
 
-      unless ci
-        raise 'You have uncommitted changes.' unless clean? && committed?
-        raise 'You have unpushed commits.' if unpushed?
+        raise "Tag #{release_tag} has already been created.\n\nThis may be caused by a failed build. #{TROUBLESHOOTING_MSG}\n\n" if already_tagged?(release_tag)
+
+        tag_version(release_version, release_tag) do
+          berks_upload
+        end
+      else
+        berks_upload
       end
+    end
+
+    def bump_patch?
+      ENV['BUMP_PATCH'] == 'true'
+    end
+
+    def bump_and_push
+      raise 'You have uncommitted changes.' unless clean? && committed?
+      raise 'You have unpushed commits.' if unpushed?
+
+      Rake::Task['version:bump:patch'].invoke
+      git_pull
+      git_push
+    end
+
+    def release_cookbook
+      start_time = Time.now
 
       Rake::Task[:test].invoke unless ENV['test'] == 'false'
 
-      tag_version(release_version, release_tag) do
-        berks_upload
-      end
-
-      Rake::Task['version:bump:patch'].invoke
-      git_pull unless ci
-      git_push
+      tag_and_upload
+      bump_and_push if bump_patch?
 
       elapsed = Time.now - start_time
       puts elapsed
@@ -126,7 +136,7 @@ module CookbookDevelopment
         The versioning/release process relies on having a VERSION file in the root of
         your cookbook as well as the version attribute in metadata.rb reading
         from said VERSION file.
-        MSG
+          MSG
       end
     end
 
