@@ -35,11 +35,11 @@ module CookbookDevelopment
     end
 
     def tag?
-      ENV['GIT_TAG'] == 'true'
+      ENV['GIT_TAG'] != 'false'
     end
 
     def tag_and_upload
-      if(tag?)
+      if tag?
         release_version = version
         release_tag = version_tag(release_version)
 
@@ -54,7 +54,7 @@ module CookbookDevelopment
     end
 
     def bump_patch?
-      ENV['BUMP_PATCH'] == 'true'
+      ENV['BUMP_PATCH'] != 'false'
     end
 
     def bump_and_push
