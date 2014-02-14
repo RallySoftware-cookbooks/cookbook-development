@@ -58,8 +58,8 @@ module CookbookDevelopment
     end
 
     def bump_and_push
-      git_pull
       Rake::Task['version:bump:patch'].invoke
+      git_pull
       git_push
     end
 
@@ -80,7 +80,7 @@ module CookbookDevelopment
       Rake::Task[:upload].invoke
     end
 
-    def git_pull(cmd = 'git pull --rebase')
+    def git_pull
       cmd = 'git pull --rebase origin master'
       out, code = sh_with_code(cmd)
       raise "Couldn't git pull. `#{cmd}' failed with the following output:\n\n#{out}\n" unless code == 0

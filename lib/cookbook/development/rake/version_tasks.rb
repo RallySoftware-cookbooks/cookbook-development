@@ -7,31 +7,29 @@ module CookbookDevelopment
     VERSION_FILE = File.join(Dir.pwd, 'VERSION')
 
     attr_reader :path
+    attr_reader :version
 
     def initialize(path = VERSION_FILE)
       @path = Pathname.new(path)
+      @version = @path.read
     end
 
     def exist?
-      File.exist? @path
-    end
-
-    def version
-      @path.read if exist?
+      @path.exist?
     end
 
     def bump(level)
-      version.to_version.bump!(level).to_s
+      @version.to_version.bump!(level).to_s
     end
 
     def bump!(level)
-      version = bump(level)
+      @version = bump(level)
       save
-      version
+      @version
     end
 
     def to_s
-      version
+      @version
     end
 
     def save
