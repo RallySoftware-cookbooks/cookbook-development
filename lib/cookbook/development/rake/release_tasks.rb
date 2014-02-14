@@ -58,8 +58,7 @@ module CookbookDevelopment
     end
 
     def bump_and_push
-      raise 'You have uncommitted changes.' unless clean? && committed?
-
+      git_pull
       Rake::Task['version:bump:patch'].invoke
       git_push
     end
@@ -81,6 +80,12 @@ module CookbookDevelopment
       Rake::Task[:upload].invoke
     end
 
+    def git_pull(cmd = 'git pull --rebase')
+      cmd = 'git pull --rebase origin master'
+      out, code = sh_with_code(cmd)
+      raise "Couldn't git pull. `#{cmd}' failed with the following output:\n\n#{out}\n" unless code == 0
+    end
+
     def git_push
       puts 'Pushing git changes...'
       perform_git_push 'origin --tags :'
@@ -91,14 +96,6 @@ module CookbookDevelopment
       cmd = "git push #{options}"
       out, code = sh_with_code(cmd)
       raise "Couldn't git push. `#{cmd}' failed with the following output:\n\n#{out}\n\nThis could be a result of unmerged commits on master. #{TROUBLESHOOTING_MSG}\n\n" unless code == 0
-    end
-
-    def clean?
-      sh_with_code('git diff --exit-code')[1] == 0
-    end
-
-    def committed?
-      sh_with_code('git diff-index --quiet --cached HEAD')[1] == 0
     end
 
     def sh(cmd, &block)
