@@ -61,7 +61,6 @@ module CookbookDevelopment
       raise 'You have uncommitted changes.' unless clean? && committed?
 
       Rake::Task['version:bump:patch'].invoke
-      git_pull
       git_push
     end
 
@@ -80,12 +79,6 @@ module CookbookDevelopment
     def berks_upload
       puts 'Running berks upload...'
       Rake::Task[:upload].invoke
-    end
-
-    def git_pull(cmd = 'git pull --rebase')
-      cmd = 'git pull --rebase'
-      out, code = sh_with_code(cmd)
-      raise "Couldn't git pull. `#{cmd}' failed with the following output:\n\n#{out}\n" unless code == 0
     end
 
     def git_push
