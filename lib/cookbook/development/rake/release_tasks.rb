@@ -59,7 +59,6 @@ module CookbookDevelopment
 
     def bump_and_push
       raise 'You have uncommitted changes.' unless clean? && committed?
-      raise 'You have unpushed commits.' if unpushed?
 
       Rake::Task['version:bump:patch'].invoke
       git_pull
@@ -107,10 +106,6 @@ module CookbookDevelopment
 
     def committed?
       sh_with_code('git diff-index --quiet --cached HEAD')[1] == 0
-    end
-
-    def unpushed?
-      sh_with_code('git cherry')[0] != ''
     end
 
     def sh(cmd, &block)
