@@ -11,7 +11,6 @@ module CookbookDevelopment
 
     def initialize(path = VERSION_FILE)
       @path = Pathname.new(path)
-      @version = @path.read
     end
 
     def exist?
@@ -19,7 +18,7 @@ module CookbookDevelopment
     end
 
     def bump(level)
-      @version.to_version.bump!(level).to_s
+      @path.read.to_version.bump!(level).to_s
     end
 
     def bump!(level)
