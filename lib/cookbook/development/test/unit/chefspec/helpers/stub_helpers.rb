@@ -14,3 +14,21 @@ module StubHelpers
     Chef::RunContext.any_instance.stub(:loaded_recipes).and_return(@included_recipes)
   end
 end
+
+def stub_locations(options)
+  locations = options.delete(:locations) || ['bld']
+  stub_data_bag_item('rally', 'locations').and_return({'known_locations' => locations})
+
+  options.each do |key, value|
+    if key.to_s.end_with? *locations
+      Chef::DataBagItem.stub(:load).with('rally', key.to_s).and_return(value)
+    else
+      locations.each do |location|
+        if !options.has_key? "#{key}_#{location}"
+          Chef::DataBagItem.stub(:load).with('rally', "#{key}_#{location}") { throw Net::HttpServerException }
+        end
+      end
+    end
+    Chef::DataBagItem.stub(:load).with('rally', key.to_s).and_return(value)
+  end
+end
