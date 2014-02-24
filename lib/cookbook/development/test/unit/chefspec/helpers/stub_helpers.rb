@@ -16,19 +16,32 @@ module StubHelpers
 end
 
 def stub_locations(options)
+  type = options.delete(:type) || :plain
+
+  case type
+  when :plain
+    stub_databag_type(Chef::DataBagItem, options)
+  when :encrypted_data_bag
+    stub_databag_type(Chef::EncryptedDataBagItem, options)
+  when :chef_vault
+    stub_databag_type(ChefVault::Item, options)
+  else
+    raise "Data bag type #{type} unknown"
+  end
+end
+
+def stub_databag_type(type, options)
   locations = options.delete(:locations) || ['bld']
   stub_data_bag_item('rally', 'locations').and_return({'known_locations' => locations})
 
   options.each do |key, value|
-    if key.to_s.end_with? *locations
-      Chef::DataBagItem.stub(:load).with('rally', key.to_s).and_return(value)
-    else
+    unless key.to_s.end_with? *locations
       locations.each do |location|
-        if !options.has_key? "#{key}_#{location}"
-          Chef::DataBagItem.stub(:load).with('rally', "#{key}_#{location}") { throw Net::HttpServerException }
+        unless options.has_key? "#{key}_#{location}"
+          type.stub(:load).with('rally', "#{key}_#{location}") { throw Net::HttpServerException }
         end
       end
     end
-    Chef::DataBagItem.stub(:load).with('rally', key.to_s).and_return(value)
+    type.stub(:load).with('rally', key.to_s).and_return(value)
   end
 end
