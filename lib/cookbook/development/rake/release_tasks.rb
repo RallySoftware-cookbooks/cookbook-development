@@ -51,6 +51,7 @@ module CookbookDevelopment
 
     def bump_and_push
       Rake::Task['version:bump:patch'].invoke
+      git_checkout
       git_pull
       git_push
     end
@@ -70,6 +71,12 @@ module CookbookDevelopment
     def berks_upload
       puts 'Running berks upload...'
       Rake::Task[:upload].invoke
+    end
+
+    def git_checkout
+      cmd = 'git checkout .'
+      out, code = sh_with_code(cmd)
+      raise "Couldn't git pull. `#{cmd}' failed with the following output:\n\n#{out}\n" unless code == 0
     end
 
     def git_pull
