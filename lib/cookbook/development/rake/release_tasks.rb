@@ -2,20 +2,12 @@
 module CookbookDevelopment
   class ReleaseTasks < Rake::TaskLib
     attr_reader :project_dir
-    attr_reader :chef_dir
-    attr_reader :knife_cfg
-    attr_reader :vendor_dir
-    attr_reader :cookbooks_dir
     attr_reader :berks_file
 
     TROUBLESHOOTING_MSG = "Refer to https://github.com/RallySoftware-cookbooks/chef-tutorials/blob/master/troubleshooting/ci.md to resolve this issue."
 
     def initialize
       @project_dir   = Dir.pwd
-      @chef_dir      = File.join(project_dir, 'test', '.chef')
-      @knife_cfg     = File.join(chef_dir, 'knife.rb')
-      @vendor_dir    = File.join(project_dir, 'vendor')
-      @cookbooks_dir = File.join(vendor_dir, 'cookbooks')
       @berks_file    = File.join(project_dir, 'Berksfile')
 
       yield(self) if block_given?
@@ -25,7 +17,7 @@ module CookbookDevelopment
     def define
       desc 'Does a berks upload --except :test'
       task :upload do |task|
-        Berkshelf::Berksfile.from_file(berks_file).upload(:path => cookbooks_dir, :except => :test)
+        Berkshelf::Berksfile.from_file(berks_file, :except => :test).upload
       end
 
       desc 'Runs the full test suite and then does a berks upload from CI'
