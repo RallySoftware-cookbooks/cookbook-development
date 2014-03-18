@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'test-kitchen'
   spec.add_dependency 'version', '~> 1.0'
   spec.add_dependency 'thor-scmversion', '~> 1.4'
+  spec.add_dependency 'kitchen-docker-api', '~> 0.1'
 
   # https://github.com/RiotGames/ridley/issues/239
   spec.add_dependency 'faraday', '0.8.9'
