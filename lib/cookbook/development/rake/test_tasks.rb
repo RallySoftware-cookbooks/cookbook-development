@@ -21,20 +21,26 @@ module CookbookDevelopment
         kitchen_config.instances.each do |instance|
           desc "Run #{instance.name} test instance"
           task instance.name do
-            instance.test(:passing)
+            destroy = (ENV['KITCHEN_DESTROY'] || 'passing').to_sym
+            instance.test(destroy)
           end
         end
 
         desc "Run all test instances"
-        task "all" => kitchen_config.instances.map { |i| i.name }
+        task :all do
+          destroy = ENV['KITCHEN_DESTROY'] || 'passing'
+          concurrency = ENV['KITCHEN_CONCURRENCY'] || '1'
+          require 'kitchen/cli'
+          Kitchen::CLI.new([], {concurrency: concurrency.to_i, destroy: destroy}).test()
+        end
       end
 
       desc 'Runs Foodcritic linting'
       FoodCritic::Rake::LintTask.new do |task|
         task.options = {
-          :search_gems => true, 
+          :search_gems => true,
           :fail_tags => ['any'],
-          :tags => ['~FC003', '~FC015'], 
+          :tags => ['~FC003', '~FC015'],
           :exclude_paths => ['vendor/**/*']
         }
       end
