@@ -25,16 +25,19 @@ module CookbookDevelopment
           end
         end
 
-        desc "Run all test instances"
-        task "all" => kitchen_config.instances.map { |i| i.name }
+        desc 'Run all test instances concurrently'
+        task 'all' do
+          require 'kitchen/cli'
+          Kitchen::CLI.new([], {concurrency: 9999, destroy: 'always'}).test()
+        end
       end
 
       desc 'Runs Foodcritic linting'
       FoodCritic::Rake::LintTask.new do |task|
         task.options = {
-          :search_gems => true, 
+          :search_gems => true,
           :fail_tags => ['any'],
-          :tags => ['~FC003', '~FC015'], 
+          :tags => ['~FC003', '~FC015'],
           :exclude_paths => ['vendor/**/*']
         }
       end
