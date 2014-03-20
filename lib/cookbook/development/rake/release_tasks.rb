@@ -22,6 +22,8 @@ module CookbookDevelopment
 
       desc 'Runs the full test suite and then does a berks upload from CI'
       task :ci do
+        ENV['KITCHEN_CONCURRENCY'] ||= '9999'
+        ENV['KITCHEN_DESTROY'] ||= 'always'
         release_cookbook
       end
     end

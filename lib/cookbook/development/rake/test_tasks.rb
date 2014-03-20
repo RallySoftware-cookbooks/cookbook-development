@@ -21,14 +21,17 @@ module CookbookDevelopment
         kitchen_config.instances.each do |instance|
           desc "Run #{instance.name} test instance"
           task instance.name do
-            instance.test(:passing)
+            destroy = (ENV['KITCHEN_DESTROY'] || 'passing').to_sym
+            instance.test(destroy)
           end
         end
 
-        desc 'Run all test instances concurrently'
-        task 'all' do
+        desc "Run all test instances"
+        task :all do
+          destroy = ENV['KITCHEN_DESTROY'] || 'passing'
+          concurrency = ENV['KITCHEN_CONCURRENCY'] || '1'
           require 'kitchen/cli'
-          Kitchen::CLI.new([], {concurrency: 9999, destroy: 'always'}).test()
+          Kitchen::CLI.new([], {concurrency: concurrency.to_i, destroy: destroy}).test()
         end
       end
 
