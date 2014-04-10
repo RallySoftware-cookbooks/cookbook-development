@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'berkshelf', '3.0.0.beta7'
+  spec.add_dependency 'berkshelf', '3.0.0.rc1'
   spec.add_dependency 'bundler', '~> 1.3'
   spec.add_dependency 'chef', '~> 11.6'
   spec.add_dependency 'chefspec', '~> 3.2.0'
@@ -30,6 +30,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor-scmversion', '~> 1.4'
   spec.add_dependency 'kitchen-docker-api', '~> 0.1'
 
-  # https://github.com/RiotGames/ridley/issues/239
-  spec.add_dependency 'faraday', '0.8.9'
 end
