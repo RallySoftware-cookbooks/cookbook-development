@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rake', '~> 10.0'
   spec.add_dependency 'test-kitchen'
   spec.add_dependency 'version', '~> 1.0'
-  spec.add_dependency 'thor-scmversion', '~> 1.4'
+  spec.add_dependency 'thor-scmversion', '~> 1.6.0'
   spec.add_dependency 'kitchen-docker-api', '~> 0.1'
 
 end
