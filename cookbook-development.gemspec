@@ -31,5 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor-scmversion', '~> 1.4.0'
   spec.add_dependency 'kitchen-docker-api', '~> 0.1'
   spec.add_dependency 'semverse', '~> 1.1.0'
+  spec.add_dependency 'ridley', '~> 4.1'
 
 end
