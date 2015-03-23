@@ -19,10 +19,10 @@ preferences.
 If you are using pre 1.x versions of this updating will break some
 things as the 1.x version used ChefSpec 4.2
 
-You need to take care of any deprcration notices and things that broke
+You need to take care of any deprecation notices and things that broke
 because they have been removed.
 
-Here are some common fixes for depercrated breaks
+Here are some common fixes for deprecated breaks
 
 ## Using in a Cookbook
 
