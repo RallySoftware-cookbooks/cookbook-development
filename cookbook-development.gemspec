@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'test-kitchen'
   spec.add_dependency 'version', '~> 1.0'
   spec.add_dependency 'thor-scmversion', '~> 1.7'
-  spec.add_dependency 'kitchen-docker-api', '~> 0.4'
+  spec.add_dependency 'kitchen-docker'
   spec.add_dependency 'semverse', '~> 1.1.0'
   spec.add_dependency 'ridley', '~> 4.1'
   spec.add_dependency 'rspec-its'
