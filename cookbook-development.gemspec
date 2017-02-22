@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'berkshelf', '~>4.0'
+  spec.add_dependency 'berkshelf'
   spec.add_dependency 'bundler', '~> 1.10'
   spec.add_dependency 'chef', '~> 12.3'
   spec.add_dependency 'chefspec', '~> 4.2'
@@ -30,8 +30,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'version', '~> 1.0'
   spec.add_dependency 'thor-scmversion', '~> 1.7'
   spec.add_dependency 'kitchen-docker'
-  spec.add_dependency 'semverse', '~> 1.1.0'
-  spec.add_dependency 'ridley', '~> 4.1'
+  spec.add_dependency 'semverse'
+  spec.add_dependency 'ridley'
   spec.add_dependency 'rspec-its'
 
 end
