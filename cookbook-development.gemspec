@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'berkshelf'
   spec.add_dependency 'bundler', '~> 1.10'
-  spec.add_dependency 'chef', '~> 12.3'
-  spec.add_dependency 'chefspec', '~> 4.2'
+  spec.add_dependency 'chef'
+  spec.add_dependency 'chefspec'
   spec.add_dependency 'knife-ec2', '~> 0.10'
   spec.add_dependency 'foodcritic', '~> 5.0'
   spec.add_dependency 'kitchen-vagrant', '~> 0.18'
