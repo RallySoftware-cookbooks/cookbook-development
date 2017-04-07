@@ -40,7 +40,7 @@ module CookbookDevelopment
         task.options = {
           :search_gems => true,
           :fail_tags => ['any'],
-          :tags => ['~FC003', '~FC015', '~FC064', '~FC065', '~FC066', '~FC067'],
+          :tags => ['~FC003', '~FC015', '~FC059', '~FC064', '~FC065', '~FC066', '~FC067'],
           :exclude_paths => ['vendor/**/*']
         }
       end
