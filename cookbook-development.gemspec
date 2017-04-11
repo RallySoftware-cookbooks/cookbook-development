@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'chef'
   spec.add_dependency 'chefspec'
   spec.add_dependency 'knife-ec2'
-  spec.add_dependency 'foodcritic', "~> 10.2.2"
+  spec.add_dependency 'foodcritic'
   spec.add_dependency 'kitchen-vagrant'
   spec.add_dependency 'rake'
   spec.add_dependency 'test-kitchen'

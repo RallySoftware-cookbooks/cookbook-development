@@ -41,7 +41,8 @@ module CookbookDevelopment
           :search_gems => true,
           :fail_tags => ['any'],
           :tags => ['~FC003', '~FC015', '~FC059', '~FC064', '~FC065', '~FC066', '~FC067'],
-          :exclude_paths => ['vendor/**/*']
+          :exclude_paths => ['vendor/**/*'],
+          :context => true
         }
       end
 
