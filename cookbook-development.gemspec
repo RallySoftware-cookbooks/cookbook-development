@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'bundler'
   spec.add_dependency 'chef'
   spec.add_dependency 'chefspec'
+  spec.add_dependency 'dep_selector'
   spec.add_dependency 'dbus-systemd'
   spec.add_dependency 'foodcritic'
   spec.add_dependency 'inspec'
