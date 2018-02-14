@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'ridley'
   spec.add_dependency 'rspec-its'
   spec.add_dependency 'semverse'
-  spec.add_dependency 'test-kitchen'
+  spec.add_dependency 'test-kitchen', "~> 1.19.2"
   spec.add_dependency 'thor-scmversion'
   spec.add_dependency 'version'
 
