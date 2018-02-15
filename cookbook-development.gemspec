@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'dep_selector'
   spec.add_dependency 'dbus-systemd'
   spec.add_dependency 'foodcritic'
-  spec.add_dependency 'inspec'
+  spec.add_dependency 'inspec', "= 1.51.0"
   spec.add_dependency 'kitchen-inspec'
   spec.add_dependency 'kitchen-docker'
   spec.add_dependency 'kitchen-dokken'
@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'ridley'
   spec.add_dependency 'rspec-its'
   spec.add_dependency 'semverse'
-  spec.add_dependency 'test-kitchen', "~> 1.19.2"
+  spec.add_dependency 'test-kitchen'
   spec.add_dependency 'thor-scmversion'
   spec.add_dependency 'version'
 
