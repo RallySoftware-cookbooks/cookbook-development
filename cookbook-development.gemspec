@@ -21,16 +21,22 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'berkshelf', "= 7.0.0"
   spec.add_dependency 'bundler'
   spec.add_dependency 'chef'
-  spec.add_dependency 'chefspec'
+  spec.add_dependency 'chefspec', "= 7.2.1"
+  spec.add_dependency 'cookstyle'
   spec.add_dependency 'dep_selector'
   spec.add_dependency 'dbus-systemd'
   spec.add_dependency 'foodcritic'
+  spec.add_dependency 'guard'
+  spec.add_dependency 'guard-rspec'
+  spec.add_dependency 'guard-foodcritic'
+  spec.add_dependency 'guard-rubocop'
   spec.add_dependency 'inspec', "= 1.51.0"
   spec.add_dependency 'kitchen-inspec'
   spec.add_dependency 'kitchen-docker'
   spec.add_dependency 'kitchen-dokken'
   spec.add_dependency 'kitchen-vagrant'
   spec.add_dependency 'knife-ec2'
+  spec.add_dependency 'pry-coolline'
   spec.add_dependency 'rake'
   spec.add_dependency 'ridley'
   spec.add_dependency 'rspec-its'
