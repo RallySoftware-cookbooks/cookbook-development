@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'kitchen-inspec'
   spec.add_dependency 'kitchen-docker'
   spec.add_dependency 'kitchen-dokken'
+  spec.add_dependency 'kitchen-google'
   spec.add_dependency 'kitchen-vagrant'
   spec.add_dependency 'knife-ec2'
   spec.add_dependency 'pry-coolline'
