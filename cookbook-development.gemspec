@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'berkshelf', "= 7.0.0"
   spec.add_dependency 'bundler'
-  spec.add_dependency 'chef'
+  spec.add_dependency 'chef', "~= 14"
   spec.add_dependency 'chefspec', "= 7.2.1"
   spec.add_dependency 'cookstyle'
   spec.add_dependency 'dep_selector'
