@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'berkshelf', "= 7.0.0"
+  spec.add_dependency 'berkshelf', "= 7.0.8"
   spec.add_dependency 'bundler'
   spec.add_dependency 'chef', "= 14.12.9"
   spec.add_dependency 'chefspec', "= 7.2.1"
