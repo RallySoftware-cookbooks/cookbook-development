@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'guard-rspec'
   spec.add_dependency 'guard-foodcritic'
   spec.add_dependency 'guard-rubocop'
-  spec.add_dependency 'inspec', "= 1.51.0"
+  spec.add_dependency 'inspec', ">= 1.51.0"
   spec.add_dependency 'kitchen-inspec'
   spec.add_dependency 'kitchen-docker'
   spec.add_dependency 'kitchen-dokken'
