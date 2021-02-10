@@ -4,7 +4,7 @@ require 'ridley'
 Ridley::Logging.logger.level = Logger.const_get 'ERROR'
 
 ridley = Ridley.new(
-  server_url: 'https://api.opscode.com/organizations/rally',
+  server_url: 'https://10.11.0.70/organizations/rally',
   client_name: 'chefbuild',
   client_key: '~/.chef/chefbuild.pem'
 )
